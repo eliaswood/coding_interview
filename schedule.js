@@ -19,11 +19,26 @@ function getUsersFromInput() {
   const inputNames = process.argv.slice(2)
   const capitalizeName = inputNames.map(name => toTitleCase(name))
   const userList = users.filter(user => capitalizeName.includes(user.name));
-  console.log(userList)
   if (userList.length !== inputNames.length) {
     console.log(chalk.red("Could not find all of those names. Please make sure they were spelled correctly."));
   }
-  return 
+  return userList;
 }
 
-getUsersFromInput()
+function getUsersTimes() {
+  const users = getUsersFromInput()
+  const newEvents = []
+  const getTimesList = users.forEach(user => {
+    return events.map(event => {
+      if (event.user_id === user.id) {
+        newEvents.push(event)
+      }
+      return newEvents;
+    })
+  })
+
+  return newEvents
+}
+
+const cal = getUsersTimes()
+console.log(cal)
