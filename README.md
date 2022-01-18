@@ -1,3 +1,13 @@
+# Running the project
+
+To Run simply clone the repo, `cd` into the folder and then do an `npm install`. To execute the script, run `node schedule.js john jane` or whatever sequence of names to check against.
+
+# Approach
+
+When thinking through this, I wanted to first filter out the users that weren't inputed as arguements. This would make sure no addional inforation events would be queried. From there, I wanted to go get only the start and stop times corresponding to those people. Next, this is where it got a bit more dicey. I found that I would first need to sort the events in order but then realized there was some overlap in times, which was then handled. It then became clear that to be able to find the times with each working day, a demarcation needed to be made create subarrays distinguish each day.
+
+The last main chunk was maping over the subarrays of days and then checking to make sure that the start time shoud be the earliest available time and if not then the first events endtime. After the first event of each day it was mainly checking the times and then pushing the available time to the array.
+
 # Background
 
 Most calendar applications provide some kind of "meet with" feature where the user
@@ -11,11 +21,11 @@ For example, say that we want to schedule a meeting with Jane, John, and Mary on
 - Mary is busy from 3:30pm - 5pm.
 
 Based on that information, our calendar app should tell us that everyone is available:
+
 - 11:00am - 12:00pm
 - 1pm - 3pm
 
 We can then schedule a meeting during any of those available times.
-
 
 # Instructions
 
@@ -42,12 +52,10 @@ and would output something like this:
 2021-07-07 16:00 - 16:15
 ```
 
-
 For the purposes of this exercise, you should restrict your search between `2021-07-05` and `2021-07-07`,
 which are the three days covered in the `events.json` file. You can also assume working hours between
 `13:00` and `21:00` UTC, which is 9-5 Eastern (don't worry about any time zone conversion, just work in
 UTC). Optionally, you could make your program support configured working hours, but this is not necessary.
-
 
 ## Data files
 
@@ -71,7 +79,6 @@ A dataset of all events on the calendars of all our users.
 `start_time`: The time the event begins
 
 `end_time`: The time the event ends
-
 
 # Notes
 
