@@ -82,6 +82,7 @@ function getAvailableTimes() {
   const availableTimeArray = []
 
   busyTimes.map(day => {
+    console.log('DAY: ', day)
     const setDate = new Date(day[0].startTime)
     const extractDate = setDate.toISOString().slice(0, 11)
 
@@ -92,18 +93,24 @@ function getAvailableTimes() {
       let currentEndTime = new Date(element.endTime)
       let currentStartTime = new Date(element.startTime)
 
-      if (i === day.length - 1) {
+      if (i === day.length - 1 && currentEndTime <= endTimeFarthest) {
         if (day.length === 1) {
           return availableTimeArray.push({
             start: startTimeMinimum.toISOString(),
             end: endTimeFarthest.toISOString()
           })
-         }
-         availableTimeArray.push({
-          start: currentEndTime.toISOString(),
-          end: endTimeFarthest.toISOString()
-         })
-
+        } else if (currentEndTime.getTime() === endTimeFarthest.getTime()) {
+            availableTimeArray.push({
+              start: currentStartTime.toISOString(),
+              end: endTimeFarthest.toISOString()
+          })
+        }
+        else {
+          availableTimeArray.push({
+            start: currentEndTime.toISOString(),
+            end: endTimeFarthest.toISOString()
+          })
+        }
       } else {
         const nextBusyTime = day[i + 1]
         const nextStartTime = new Date(nextBusyTime.startTime)
@@ -117,13 +124,13 @@ function getAvailableTimes() {
           }
           availableTimeArray.push({
             start: startTimeMinimum .toISOString(),
-            end: nextStartTime.toISOString()
+            end: currentStartTime.toISOString()
           })
         }
         let endTimeToCompare = currentEndTime < endTimeFarthest 
           ? currentEndTime
           : endTimeFarthest;
-        
+
         if (endTimeToCompare < nextStartTime) {
           availableTimeArray.push({
             start: endTimeToCompare.toISOString(),
